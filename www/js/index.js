@@ -9,17 +9,16 @@ function onBackKeyDown() {
 }
 
 
-//$(document).ready(function () {
-//    run();
-//}); 
-
 function run() {
+//    localStorage.setItem('glob_server', glob_server);
+
+    
+
     $('img').click(function () {
         window.location.href = 'home.html';
     });
 
     var pesan = getParameterByName('pesan');
-//    alert(pesan);
 
     if (pesan == null || pesan.length < 1) {
 
@@ -30,7 +29,5 @@ function run() {
 
         }, 500);
     }
-
-    alert(device.uuid);
 
 }

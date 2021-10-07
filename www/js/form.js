@@ -80,9 +80,10 @@ $(document).ready(function () {
         $('#keterangan_pengaduan').append('<option value="etc" >Lain Lain</option>');
         $('#keterangan_pengaduan').val('');
 
+        server_api = localStorage.getItem('glob_server');
 
         $.ajax({
-            url: glob_server + 'Jenis_pengaduan',
+            url: server_api + '/Jenis_pengaduan',
             type: 'get',
             crossDomain: true,
             data: {
@@ -140,6 +141,7 @@ $(document).ready(function () {
     $('#form_submit').submit(function (e) {
         e.preventDefault();
 
+        var server_api = localStorage.getItem('glob_server');
 
         var validasi_succes = validate();
 
@@ -148,7 +150,7 @@ $(document).ready(function () {
             $('#loading_spinner').show();
 
             $.ajax({
-                url: glob_server + '/lapor/save',
+                url: server_api + '/lapor/save',
                 type: 'post',
                 data: new FormData(this),
                 contentType: false,

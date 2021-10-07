@@ -1,3 +1,15 @@
 #submit_container{
     
 }
+
+li.nav-item2{
+    padding: 0px 20px 0px 20px;
+}
+
+.navbar{
+    padding: 1rem 1rem 0 1rem;
+}
+
+li.nav-item2.active{
+    border-bottom: 2px solid #fff;
+}
