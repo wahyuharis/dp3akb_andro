@@ -4,16 +4,16 @@ function onDeviceReady() {
 }
 document.addEventListener("backbutton", onBackKeyDown, false);
 function onBackKeyDown() {
-    // Handle the back button
     navigator.app.exitApp();
 }
 
 
 function run() {
-//    localStorage.setItem('glob_server', glob_server);
-
+    server_api = localStorage.getItem('glob_server');
+    if(server_api==null){
+        localStorage.setItem('glob_server','http://192.168.43.159/dp3akb/api/');
+    }
     
-
     $('img').click(function () {
         window.location.href = 'home.html';
     });
@@ -23,10 +23,8 @@ function run() {
     if (pesan == null || pesan.length < 1) {
 
     } else {
-
         setTimeout(function () {
             $('#myModal').modal('show');
-
         }, 500);
     }
 

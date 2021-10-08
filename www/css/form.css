@@ -13,3 +13,5 @@ li.nav-item2{
 li.nav-item2.active{
     border-bottom: 2px solid #fff;
 }
+
+.select2-results__option[aria-selected=true] { display: none;}

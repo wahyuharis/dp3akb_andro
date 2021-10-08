@@ -8,9 +8,6 @@ function onBackKeyDown() {
 
 $(document).ready(function () {
     $('body').fadeIn("slow");
-//    doc_width = $(document).height();
-//    top_fix_bot = doc_width - 150;
-//    $('#submit_container').css('top',top_fix_bot + 'px');
 
     var type = getParameterByName('type');
 
@@ -18,6 +15,7 @@ $(document).ready(function () {
 
     $('#jenis_kelamin_korban').val('');
     $('#jenis_kelamin').val('');
+
 
     if (type == 'child') {
         $('#navbar').removeClass('bg-danger');
@@ -65,14 +63,20 @@ $(document).ready(function () {
 
     get_option_keterangan();
 
-    $('#keterangan_pengaduan').change(function () {
-        value = $(this).val();
-        if (value == 'etc') {
+
+    $('#ket_lain_toggle').change(function () {
+        var ket_lain_toggle = $('#ket_lain_toggle').is(':checked');
+
+        if (ket_lain_toggle) {
             $('#keterangan_lain_field').show();
+            $('#keterangan_pengaduan').prop('disabled', true);
+
         } else {
             $('#keterangan_lain_field').hide();
+            $('#keterangan_pengaduan').prop('disabled', false);
         }
     });
+
 
 
 
@@ -92,20 +96,15 @@ $(document).ready(function () {
                 data = result.data;
                 $('#keterangan_pengaduan').html('');
 
-//                Object.keys(data).forEach(function (key) {
-//                    console.log(key,data[key]);
-//                    $('#keterangan_pengaduan').append('<option value="' + key + '" >' + data[key] + '</option>');
-//                });
-
                 for (var i = 0; i < data.length; i++) {
                     $('#keterangan_pengaduan').append('<option value="' + data[i].id_jenis_aduan + '" >' + data[i].keterangan + '</option>');
                 }
-
-
-                $('#keterangan_pengaduan').append('<option value="etc" >Lain Lain</option>');
-
-
+//                $('#keterangan_pengaduan').append('<option value="etc" >Lain Lain</option>');
                 $('#keterangan_pengaduan').val('');
+                $('#keterangan_pengaduan').select2({
+                    theme: "bootstrap"
+                });
+
 
             }, error: function (err) {
                 alert(JSON.stringify(err));
@@ -164,7 +163,7 @@ $(document).ready(function () {
                         $('#btn_submit').prop('disabled', false);
                         $('#loading_spinner').hide();
 
-                        window.location.href = "index.html?pesan=" + succes_message;
+//                        window.location.href = "index.html?pesan=" + succes_message;
 
                     }
 
@@ -201,7 +200,7 @@ $(document).ready(function () {
         var jenis_kelamin_korban = $('select[name=jenis_kelamin_korban]').val();
 
 
-        var keterangan_pengaduan = $('select[name=keterangan_pengaduan]').val();
+//        var keterangan_pengaduan = $('select[name=keterangan_pengaduan]').val();
         var keterangan_lain = $('textarea[name=keterangan_lain]').val();
 
         if (nama.length < 5) {
@@ -242,15 +241,18 @@ $(document).ready(function () {
             succes = false;
         }
 
-        if (keterangan_pengaduan == 'etc') {
+
+        var ket_lain_toggle = $('#ket_lain_toggle').is(':checked');
+        if (ket_lain_toggle) {
             if (keterangan_lain.length < 5) {
                 $('span[validationatr=keterangan_lain]').html('keterangan lain wajib di isi');
                 succes = false;
             }
-        } else if (keterangan_pengaduan == null) {
+        } else {
             $('span[validationatr=keterangan_pengaduan]').html('keterangan pengaduan wajib di isi');
             succes = false;
         }
+
 
         $('#form_submit').find('input,select,textarea').change(function () {
             attr_name = $(this).attr('name');

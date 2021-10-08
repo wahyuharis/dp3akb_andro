@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">-->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -10,6 +10,8 @@
         <title>OTS - DPPPA</title>
         <link href="bootstrap/dist/css/bootstrap-materia.min.css" rel="stylesheet" type="text/css"/>
         <link href="fontawesome/css/all.min.css" rel="stylesheet" type="text/css"/>
+        <link href="select2-4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css"/>
+        <link href="select2-bootstrap-theme-0.1.0-beta.10/dist/select2-bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/form.css" rel="stylesheet" type="text/css"/>
 
         <script src="cordova.js"></script>
@@ -18,6 +20,7 @@
         <script src="fontawesome/js/all.min.js" type="text/javascript"></script>
         <script src="js/querystring.js" type="text/javascript"></script>
         <script src="js/server-api.js" type="text/javascript"></script>
+        <script src="select2-4.1.0-rc.0/dist/js/select2.full.min.js" type="text/javascript"></script>
         <script src="js/form.js" type="text/javascript"></script>
     </head>
     <body style="display: none">
@@ -46,14 +49,14 @@
                 </ul>
             </div>
         </nav>
-        <div class="container" style="height: 900px">
+        <div class="container" >
             <div class="row">
                 <div style="height: 200px" ></div>
             </div>
             <div class="row">
                 <div class="col-md-12" >
                     <!--<br><br>-->
-                    <form id="form_submit" action="#">
+                    <form id="form_submit" action="#"  enctype="multipart/form-data" >
                         <div id="form-1" >
                             <div class="form-group">
                                 <label for="">Nama</label>
@@ -66,7 +69,7 @@
                                 <input type="number" class="form-control" placeholder="Umur" id="umur" name="umur" >
                                 <span class="text-small text-danger validationatr" validationatr="umur" ></span>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="">Jenis Kelamin</label>
                                 <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" >
@@ -112,7 +115,7 @@
                                 <input type="number" class="form-control" placeholder="No Telp Korban" id="no_telp_korban" name="no_telp_korban">
                                 <span class="text-small text-danger validationatr" validationatr="no_telp_korban" ></span>
                             </div>
-                            
+
                             <div class="form-group" id="form_jenis_kelamin_korban">
                                 <label for="">Jenis Kelamin</label>
                                 <select class="form-control" id="jenis_kelamin_korban" name="jenis_kelamin_korban" >
@@ -124,9 +127,18 @@
 
                             <div class="form-group">
                                 <label for="">Keterangan Pengaduan</label>
-                                <select class="form-control" id="keterangan_pengaduan" name="keterangan_pengaduan" >
+                                <select multiple style="width: 100%" class="form-control" id="keterangan_pengaduan" name="keterangan_pengaduan" >
                                 </select>
                                 <span class="text-small text-danger validationatr" validationatr="keterangan_pengaduan" ></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="ket_lain_toggle" name="ket_lain_toggle">
+                                    <label class="custom-control-label" for="ket_lain_toggle">Keterangan Lain</label>
+                                </div>
+
+
                             </div>
 
                             <div class="form-group" id="keterangan_lain_field" style="display: none" >
@@ -134,24 +146,29 @@
                                 <textarea id="keterangan_lain" class="form-control" name="keterangan_lain" ></textarea>
                                 <span class="text-small text-danger validationatr" validationatr="keterangan_lain" ></span>
                             </div>
-                            
+
                             <input type="hidden" name="jenis_korban" id="jenis_korban" value="">
 
                         </div>
-                        <div id="submit_container" style="width: 100%;position: fixed;bottom: 0;left:0;right: 0;" >
+                        <div id="submit_container" style="width: 100%;position: fixed;bottom: 0;left:0;right: 0;z-index: 99" >
                             <!--<div id="submit_container"  >-->
                             <!--<button id="save" type="submit" >save</button>-->
                             <span id="btn_next" type="submit" class="btn btn-danger btn-block">Lanjutkan</span>
                             <button  type="submit"  id="btn_submit" style="display: none" class="btn btn-danger btn-block">Save</button>
                         </div>
+
+                        <div class="row">
+                            <div style="height: 300px" ></div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-        
+
+
         <div id="loading_spinner" style="display: none;width: 100%; height: 200px;text-align: center;position: fixed;top:30%;font-size: 30px" >
             <i class="fas fa-spinner fa-spin"></i>
         </div>
-        
+
     </body>
 </html>
