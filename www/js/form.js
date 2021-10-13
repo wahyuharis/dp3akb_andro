@@ -9,12 +9,31 @@ function onBackKeyDown() {
 $(document).ready(function () {
     $('body').fadeIn("slow");
 
+    var device_id = localStorage.getItem('device_id');
+
+    $('#device_id').val(device_id);
+
     var type = getParameterByName('type');
 
     var title = '';
 
     $('#jenis_kelamin_korban').val('');
     $('#jenis_kelamin').val('');
+
+    $('#umur_korban').change(function (e) {
+        $('span[validationatr=umur_korban]').html('');
+        valuenya = $(this).val();
+
+        if (valuenya > 17 && type == 'child') {
+            $(this).val(0);
+            $('span[validationatr=umur_korban]').html('usia maksimal 17');
+        }
+
+        if (valuenya < 18 && type == 'woman') {
+            $(this).val(0);
+            $('span[validationatr=umur_korban]').html('usia minimal 18');
+        }
+    });
 
 
     if (type == 'child') {
@@ -62,6 +81,7 @@ $(document).ready(function () {
     });
 
     get_option_keterangan();
+    get_pelapor_last_data();
 
 
     $('#ket_lain_toggle').change(function () {
@@ -114,6 +134,36 @@ $(document).ready(function () {
 
     }
 
+    function get_pelapor_last_data() {
+        server_api = localStorage.getItem('glob_server');
+        server_host = server_api.replace("api", "");
+        device_id = localStorage.getItem('device_id');
+
+        $.ajax({
+            url: server_api + '/lapor/index/',
+            type: 'get',
+            crossDomain: true,
+            data: {
+                'device_id': device_id,
+            }, success: function (result) {
+                data = result.data;
+
+                $('#nama').val(data.nama_pelapor);
+                $('#umur').val(data.umur_pelapor);
+                $('#jenis_kelamin').val(data.jkel_pelapor);
+                $('#alamat').val(data.alamat_pelapor);
+                $('#no_telp').val(data.nohp_pelapor);
+                $('#ktp_old').val(data.foto_ktp);
+                $('#output').attr('src', server_host + '/uploads/' + data.foto_ktp);
+
+
+            }, error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        });
+
+    }
+
 
     function form2_open() {
         $('#form-1').hide();
@@ -163,7 +213,7 @@ $(document).ready(function () {
                         $('#btn_submit').prop('disabled', false);
                         $('#loading_spinner').hide();
 
-//                        window.location.href = "index.html?pesan=" + succes_message;
+                        window.location.href = "laporan_list.html?pesan=" + succes_message;
 
                     }
 
@@ -200,7 +250,7 @@ $(document).ready(function () {
         var jenis_kelamin_korban = $('select[name=jenis_kelamin_korban]').val();
 
 
-//        var keterangan_pengaduan = $('select[name=keterangan_pengaduan]').val();
+        var keterangan_pengaduan = $('#keterangan_pengaduan').val();
         var keterangan_lain = $('textarea[name=keterangan_lain]').val();
 
         if (nama.length < 5) {
@@ -249,8 +299,11 @@ $(document).ready(function () {
                 succes = false;
             }
         } else {
-            $('span[validationatr=keterangan_pengaduan]').html('keterangan pengaduan wajib di isi');
-            succes = false;
+            if (keterangan_pengaduan.length < 1) {
+                $('span[validationatr=keterangan_pengaduan]').html('keterangan pengaduan wajib di isi');
+                succes = false;
+            }
+
         }
 
 

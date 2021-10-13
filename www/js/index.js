@@ -18,14 +18,20 @@ function run() {
         window.location.href = 'home.html';
     });
 
-    var pesan = getParameterByName('pesan');
+//    var pesan = getParameterByName('pesan');
+//
+//    if (pesan == null || pesan.length < 1) {
+//
+//    } else {
+//        setTimeout(function () {
+//            $('#myModal').modal('show');
+//        }, 500);
+//    }
 
-    if (pesan == null || pesan.length < 1) {
-
-    } else {
-        setTimeout(function () {
-            $('#myModal').modal('show');
-        }, 500);
+    if(device.uuid==null){
+        localStorage.setItem('device_id','browsrid123');
+    }else{
+        localStorage.setItem('device_id',device.uuid);
     }
 
 }

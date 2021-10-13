@@ -66,7 +66,7 @@
 
                             <div class="form-group">
                                 <label for="">Umur</label>
-                                <input type="number" class="form-control" placeholder="Umur" id="umur" name="umur" >
+                                <input type="number" class="form-control" placeholder="Umur" id="umur" name="umur" autocomplete="off">
                                 <span class="text-small text-danger validationatr" validationatr="umur" ></span>
                             </div>
 
@@ -90,6 +90,33 @@
                                 <input type="number" class="form-control" placeholder="No Telp" id="no_telp" name="no_telp">
                                 <span class="text-small text-danger validationatr" validationatr="no_telp" ></span>
                             </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">ktp</label>
+                                <input name="ktp" type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" accept="image/*;capture=camera" onchange="loadFile(event)">
+                                <small id="fileHelp" class="form-text text-muted"> opsional.</small>
+                                <img class="img-fluid" id="output" style="width: 200px;"/>
+                                <input type="hidden" name="ktp_old" id="ktp_old" >
+                                <script>
+                                    var loadFile = function (event) {
+                                        file_name = event.target.files[0].name;
+                                        file_ext = file_name.split('.').pop();
+
+                                        if (file_ext == 'jpg' || file_ext == 'JPG' || file_ext == 'jpeg' || file_ext == 'JPEG' || file_ext == 'png' || file_ext == 'PNG') {
+                                            var reader = new FileReader();
+                                            reader.onload = function () {
+                                                var output = document.getElementById('output');
+                                                output.src = reader.result;
+
+                                            };
+                                            reader.readAsDataURL(event.target.files[0]);
+                                        }else{
+                                            $('input[name=ktp]').val(null);
+                                            alert('tipe file hanya boleh jpg dan png');
+                                        }
+                                    };
+                                </script>
+                            </div>
                         </div>
                         <div id="form-2" style="display: none" >
                             <div class="form-group">
@@ -100,7 +127,7 @@
 
                             <div class="form-group">
                                 <label for="">Umur</label>
-                                <input type="number" class="form-control" placeholder="Umur Korban" id="umur_korban" name="umur_korban">
+                                <input type="number" class="form-control" placeholder="Umur Korban" id="umur_korban" name="umur_korban"  autocomplete="off">
                                 <span class="text-small text-danger validationatr" validationatr="umur_korban" ></span>
 
                             </div>
@@ -127,7 +154,7 @@
 
                             <div class="form-group">
                                 <label for="">Keterangan Pengaduan</label>
-                                <select multiple style="width: 100%" class="form-control" id="keterangan_pengaduan" name="keterangan_pengaduan" >
+                                <select multiple style="width: 100%" class="form-control" id="keterangan_pengaduan" name="keterangan_pengaduan[]" >
                                 </select>
                                 <span class="text-small text-danger validationatr" validationatr="keterangan_pengaduan" ></span>
                             </div>
@@ -148,6 +175,7 @@
                             </div>
 
                             <input type="hidden" name="jenis_korban" id="jenis_korban" value="">
+                            <input type="hidden" name="device_id" id="device_id" value="">
 
                         </div>
                         <div id="submit_container" style="width: 100%;position: fixed;bottom: 0;left:0;right: 0;z-index: 99" >
